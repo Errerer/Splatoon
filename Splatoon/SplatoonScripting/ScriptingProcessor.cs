@@ -300,6 +300,7 @@ internal static partial class ScriptingProcessor
                                                         //DeleteFileToRecycleBin(result.path);
                                                         File.WriteAllText(result.path, result.code, Encoding.UTF8);
                                                         instance.InternalData.Path = result.path;
+                                                        instance.InternalData.ReloadOverrides();
                                                         DuoLog.Debug($"Script overwritten at {instance.InternalData.Path}");
                                                     }
                                                     instance.OnSetup();
@@ -630,7 +631,7 @@ internal static partial class ScriptingProcessor
         }
     }
 
-    internal static void OnGainBuffEffect(uint sourceId, List<uint> gainBuffIds)
+    internal static void OnGainBuffEffect(uint sourceId, IReadOnlyList<uint> gainBuffIds)
     {
         for(var i = 0; i < Scripts.Count; i++)
         {
@@ -645,7 +646,7 @@ internal static partial class ScriptingProcessor
         }
     }
 
-    internal static void OnRemoveBuffEffect(uint sourceId, List<uint> removeBuffIds)
+    internal static void OnRemoveBuffEffect(uint sourceId, IReadOnlyList<uint> removeBuffIds)
     {
         for(var i = 0; i < Scripts.Count; i++)
         {
